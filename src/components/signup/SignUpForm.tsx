@@ -8,6 +8,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 
+import SwalsFunctions from "@/helpers/SwalHandler";
+
 export default function SignUpForm() {
   const handleSubmit = (event : any) => {
     event.preventDefault();
