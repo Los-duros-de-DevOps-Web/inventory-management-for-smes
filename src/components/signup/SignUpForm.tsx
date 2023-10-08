@@ -107,7 +107,7 @@ export default function SignUpForm() {
                 <Button
                   type="submit"
                   fullWidth
-                  variant="contained"
+                  variant="outlined"
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign Up

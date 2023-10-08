@@ -64,7 +64,7 @@ export default function LoginForm() {
               }}
             >
               <Typography component="h1" variant="h5">
-                Sign in
+                Login
               </Typography>
               <Box
                 component="form"
@@ -99,7 +99,7 @@ export default function LoginForm() {
                 <Button
                   type="submit"
                   fullWidth
-                  variant="contained"
+                  variant="outlined"
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign In
