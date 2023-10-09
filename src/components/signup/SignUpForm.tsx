@@ -1,24 +1,39 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-import register from "../../pages/api/register";
-import SwalsFunctions from "@/helpers/SwalHandler";
+import Link from "@mui/material/Link";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 export default function SignUpForm() {
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get("name"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    try {
+      await axios.post("api/register", {
+        name: data.get("name"),
+        username: data.get("username"),
+        gPassword: data.get("gPassword"),
+      });
+
+      toast.success("Account created.");
+
+      await signIn("credentials", {
+        username: data.get("username"),
+        password: data.get("gPassword"),
+        callbackUrl: "/",
+      });
+    } catch (error) {
+      toast.error("Something went wrong, please try again");
+    }
   };
 
   return (
@@ -87,20 +102,20 @@ export default function SignUpForm() {
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
                   autoFocus
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
-                  name="password"
+                  name="gPassword"
                   label="Password"
                   type="password"
-                  id="password"
+                  id="gPassword"
                   autoComplete="current-password"
                 />
 
