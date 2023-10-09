@@ -1,54 +1,51 @@
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
 }
 
 model Employee {
-  id       Int      @id @default(autoincrement())
-  username String   @unique
+  id       Int     @id @default(autoincrement())
+  username String  @unique
   password String
   name     String
-  role     String?  @default("employee")
-  store    Store[]  @relation("StoreEmployee")
+  role     String? @default("employee")
+  store    Store[] @relation("StoreEmployee")
 }
 
 model Store {
-  id         Int          @id @default(autoincrement())
-  name       String
-  employees  Employee[]   @relation("StoreEmployee")
-  inventory  Inventory[]  @relation("StoreInventory")
+  id        Int         @id @default(autoincrement())
+  name      String
+  employees Employee[]  @relation("StoreEmployee")
+  inventory Inventory[] @relation("StoreInventory")
 }
+
 model Inventory {
-  id         Int          @id @default(autoincrement())
-  products   Product[]    @relation("ProductInventory")
-  store      Store        @relation("StoreInventory", fields: [storeId], references: [id])
-  storeId    Int
+  id       Int       @id @default(autoincrement())
+  products Product[] @relation("ProductInventory")
+  store    Store     @relation("StoreInventory", fields: [storeId], references: [id])
+  storeId  Int
 }
 
 model Product {
-  id               Int                @id @default(autoincrement())
-  name             String
-  details          String
-  quantityInStock  Int
-  image            String?
-  lowStockRange    Int
-  inventory        Inventory          @relation("ProductInventory", fields: [inventoryId], references: [id])
-  inventoryId      Int
-  lowStockAlarms   LowStockAlarm[]    @relation("ProductLowStockAlarm")
+  id              Int             @id @default(autoincrement())
+  name            String
+  details         String
+  quantityInStock Int
+  image           String?
+  lowStockRange   Int
+  inventory       Inventory       @relation("ProductInventory", fields: [inventoryId], references: [id])
+  inventoryId     Int
+  lowStockAlarms  LowStockAlarm[] @relation("ProductLowStockAlarm")
 }
 
 model LowStockAlarm {
-  id          Int        @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   date        DateTime
   description String
-  product     Product    @relation("ProductLowStockAlarm", fields: [productId], references: [id])
+  product     Product  @relation("ProductLowStockAlarm", fields: [productId], references: [id])
   productId   Int
 }
-
-
-
