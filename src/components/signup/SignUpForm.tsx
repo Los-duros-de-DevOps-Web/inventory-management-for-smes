@@ -11,7 +11,7 @@ import { Container } from "@mui/material";
 import SwalsFunctions from "@/helpers/SwalHandler";
 
 export default function SignUpForm() {
-  const handleSubmit = (event : any) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -103,7 +103,7 @@ export default function SignUpForm() {
                   id="password"
                   autoComplete="current-password"
                 />
-                
+
                 <Button
                   type="submit"
                   fullWidth

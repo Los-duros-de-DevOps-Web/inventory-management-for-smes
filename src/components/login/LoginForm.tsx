@@ -9,15 +9,26 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
-  const handleSubmit = (event : any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      const data = new FormData(event.currentTarget);
+      await signIn("credentials", {
+        email: data.get("username"),
+        password: data.get("password"),
+        callbackUrl: "/hola",
+      });
+
+      toast.success("Logged in");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Bad credentials");
+    }
   };
 
   return (
@@ -76,10 +87,10 @@ export default function LoginForm() {
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
                   autoFocus
                 />
                 <TextField
