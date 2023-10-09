@@ -14,7 +14,7 @@ export default NextAuth({
         username: { label: "username", type: "text" },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) {
           throw new Error("Invalid credentials");
         }
