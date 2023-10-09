@@ -21,7 +21,7 @@ export default function LoginForm() {
       await signIn("credentials", {
         username: data.get("username"),
         password: data.get("password"),
-        callbackUrl: "/",
+        callbackUrl: "/dashboard",
       });
 
       toast.success("Logged in");
