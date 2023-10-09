@@ -17,10 +17,11 @@ export default function LoginForm() {
     event.preventDefault();
     try {
       const data = new FormData(event.currentTarget);
+
       await signIn("credentials", {
-        email: data.get("username"),
+        username: data.get("username"),
         password: data.get("password"),
-        callbackUrl: "/hola",
+        callbackUrl: "/",
       });
 
       toast.success("Logged in");
