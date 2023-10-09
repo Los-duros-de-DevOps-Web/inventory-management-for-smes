@@ -1,9 +1,11 @@
-import {redirect} from "next/navigation";
+import { redirect } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function Home() {
-  redirect("/login");
-
   return (
-    <div className="flex flex-col items-center md:flex-row md:h-screen"></div>
-  )
+    <div className="flex flex-col items-center md:flex-row md:h-screen">
+      Hola
+      <button onClick={() => signOut()}>Cerrar sesión</button>
+    </div>
+  );
 }
