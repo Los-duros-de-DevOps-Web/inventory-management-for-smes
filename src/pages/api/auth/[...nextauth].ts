@@ -15,27 +15,27 @@ export default NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
-          throw new Error("Invalid credentials");
-        }
+        // if (!credentials?.username || !credentials?.password) {
+        //   throw new Error("Invalid credentials");
+        // }
 
         const user = await prisma.employee.findUnique({
           where: {
-            username: credentials.username,
+            username: credentials?.username,
           },
         });
 
         if (!user || !user?.password) {
-          throw new Error("Invalid credentials");
+          return null;
         }
 
         const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
+          credentials?.password || "",
           user.password
         );
 
         if (!isCorrectPassword) {
-          throw new Error("Invalid credentials");
+          return null;
         }
 
         return {
@@ -56,4 +56,12 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/',
+    signOut: '/auth/signout',
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // (used for check email message)
+    newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  }
 });
+
