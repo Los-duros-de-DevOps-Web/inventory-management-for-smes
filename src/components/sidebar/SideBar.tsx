@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import classNames from "classnames";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
+import { BiSolidLogIn } from "react-icons/bi";
 
 import { NavItems } from "./NavItems";
 
@@ -18,6 +21,13 @@ type Props = {
 };
 
 const SideBar = ({ open, setOpen, navItems = NavItems }: Props) => {
+  const router = useRouter();
+
+  const Logout = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
+
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -61,6 +71,18 @@ const SideBar = ({ open, setOpen, navItems = NavItems }: Props) => {
               </Link>
             );
           })}
+          <li
+            className={classNames({
+              "text-white hover:bg-gray-800": true, //colors
+              "flex gap-4 items-center ": true, //layout
+              "transition-colors duration-300": true, //animation
+              "rounded-md p-2 mx-5": true, //self style
+            })}
+            onClick={Logout}
+          >
+            {<BiSolidLogIn className="w-6 h-6"></BiSolidLogIn>}
+            {isHovered || (open && !isHovered) ? "Logout" : null}
+          </li>
         </ul>
       </nav>
     </div>

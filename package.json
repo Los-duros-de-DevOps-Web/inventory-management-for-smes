@@ -27,7 +27,9 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
-    "sweetalert2": "^11.7.32"
+    "react-spinners": "^0.13.8",
+    "sweetalert2": "^11.7.32",
+    "swr": "^2.2.4"
   },
   "devDependencies": {
     "@types/node": "latest",

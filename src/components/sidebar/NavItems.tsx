@@ -42,12 +42,7 @@ export const NavItems: NavItem[] = [
   },
   {
     label: "Perfil",
-    href: "/calendar",
+    href: "/profile",
     icon: <FaUserAlt className="w-6 h-6" />,
-  },
-  {
-    label: "Logout",
-    href: "/calendar",
-    icon: <BiSolidLogIn className="w-6 h-6" />,
   },
 ];
