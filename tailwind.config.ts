@@ -14,7 +14,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       gridTemplateColumns: {
-        sidebar: "300px auto",
+        sidebar: "90px auto",
       },
       gridTemplateRows: {
         header: "64px auto",

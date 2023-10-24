@@ -32,7 +32,7 @@ const SideBar = ({ open, setOpen, navItems = NavItems }: Props) => {
     <div
       className={classNames({
         "flex flex-col justify-between": true, // layout
-        "bg-indigo-700 text-zinc-50": true, // colors
+        "bg-gray-600  text-white": true, // colors
         "md:w-[250px] md:sticky md:top-16 md:z-0 top-0 z-20 fixed": isHovered, // positioning
         "md:w-[80px] md:sticky md:top-16 md:z-0 top-0 z-20 fixed": !isHovered,
         "md:h-[calc(100vh_-_64px)] h-full w-[300px]": true, // for height and width
@@ -49,13 +49,14 @@ const SideBar = ({ open, setOpen, navItems = NavItems }: Props) => {
               <Link key={index} href={item.href}>
                 <li
                   className={classNames({
-                    "text-indigo-100 hover:bg-indigo-900": true, //colors
+                    "text-white hover:bg-gray-800": true, //colors
                     "flex gap-4 items-center ": true, //layout
                     "transition-colors duration-300": true, //animation
                     "rounded-md p-2 mx-5": true, //self style
                   })}
                 >
-                  {item.icon} {isHovered || !open ? item.label : null}
+                  {item.icon}{" "}
+                  {isHovered || (open && !isHovered) ? item.label : null}
                 </li>
               </Link>
             );
