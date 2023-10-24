@@ -14,23 +14,19 @@ import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
   const handleSubmit = async (event: any) => {
-
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const request = await signIn("credentials", {
-      
       username: data.get("username"),
       password: data.get("password"),
-      callbackUrl: "/dashboard",
+      callbackUrl: "/",
       redirect: false,
     });
-    
-    if(request?.ok){
 
+    if (request?.ok) {
       toast.success("Login successful");
-      window.location.href = request?.url || "/dashboard";
-    }else{
-
+      window.location.href = request?.url || "/";
+    } else {
       toast.error("Invalid username or password");
     }
   };
