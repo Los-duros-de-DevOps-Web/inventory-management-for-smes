@@ -19,6 +19,8 @@ const TableStores = () => {
     stores && setStores(stores);
   }, [stores]);
 
+  const onRefresh = () => {};
+
   return (
     <div className="mx-auto mt-3 mb-10">
       <p className="text-2xl sm:text-4xl font-bold text-center mb-5">Tiendas</p>
@@ -68,6 +70,9 @@ const TableStores = () => {
             })}
         </tbody>
       </table>
+      <div className="flex justify-center">
+        <Button onClick={onRefresh}>Refrescar vista</Button>
+      </div>
       {openModalEmployee && (
         <ModalEditEmployee
           openModal={openModalEmployee}

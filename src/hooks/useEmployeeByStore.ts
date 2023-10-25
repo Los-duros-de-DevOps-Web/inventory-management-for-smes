@@ -1,7 +1,7 @@
 import fetcher from "@/libs/fetcher";
 import useSWR from "swr";
 
-const useGetStore = (emStoreId: any) => {
+const useEmployeeByStore = (emStoreId: any) => {
   const { data, error, isLoading, mutate } = useSWR(
     `/api/store/employee/${emStoreId}`,
     fetcher
@@ -15,4 +15,4 @@ const useGetStore = (emStoreId: any) => {
   };
 };
 
-export default useGetStore;
+export default useEmployeeByStore;

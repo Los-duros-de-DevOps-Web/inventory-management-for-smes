@@ -1,4 +1,4 @@
-import prisma from "../../../../libs/prisma";
+import prisma from "../../../../../libs/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -9,9 +9,11 @@ export default async function handler(
     return res.status(405).end();
   }
   try {
-    const { storeId } = req.query;
+    const { emStoreId } = req.query;
+    console.log(emStoreId);
+
     const employees = await prisma.employee.findMany({
-      where: { storeId: Number(storeId) },
+      where: { storeId: Number(emStoreId) },
     });
 
     return res.status(200).json(employees);

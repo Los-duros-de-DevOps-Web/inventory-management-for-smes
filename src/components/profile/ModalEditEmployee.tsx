@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import TableEmployeeDel from "./TableEmployeeDel";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,8 +20,6 @@ const style = {
 const ModalEditEmployee = ({ setOpenModal, openModal, storeId }: any) => {
   const handleClose = () => setOpenModal(false);
 
-  console.log(storeId + "Perra");
-
   return (
     <div>
       <Modal
@@ -31,11 +30,12 @@ const ModalEditEmployee = ({ setOpenModal, openModal, storeId }: any) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h4" component="h2">
-            Crear Tienda
+            Gestión de empleados
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            A continuación deberás de ingresar la información para la tienda
+            A continuación podras ver los empleados de tu tienda
           </Typography>
+          <TableEmployeeDel storeId={storeId} />
         </Box>
       </Modal>
     </div>
