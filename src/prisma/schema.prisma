@@ -13,7 +13,8 @@ model Employee {
   password String
   name     String
   role     String? @default("employee")
-  store    Store[] @relation("StoreEmployee")
+  store    Store?  @relation("StoreEmployee", fields: [storeId], references: [id])
+  storeId  Int?
 }
 
 model Store {

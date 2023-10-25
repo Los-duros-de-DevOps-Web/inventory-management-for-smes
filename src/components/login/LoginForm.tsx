@@ -16,8 +16,12 @@ export default function LoginForm() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    const userN = data.get("username");
+    console.log(userN);
+
     const request = await signIn("credentials", {
-      username: data.get("username"),
+      username: userN,
       password: data.get("password"),
       callbackUrl: "/",
       redirect: false,
