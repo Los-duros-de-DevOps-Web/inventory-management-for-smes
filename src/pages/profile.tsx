@@ -4,6 +4,7 @@ import React from "react";
 import { ClipLoader } from "react-spinners";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import MainCardProfile from "@/components/profile/MainCardProfile";
+import StoreCardProfile from "@/components/profile/StoreCardProfile";
 
 const ProfilePage = () => {
   const UserData = useCurrentUser().data;
@@ -19,6 +20,9 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-col gap-6">
       {UserData && <MainCardProfile UserData={UserData} />}
+      {UserData.storeId !== null && (
+        <StoreCardProfile storeId={UserData.storeId} />
+      )}
       <div className="mx-auto mt-3">
         <p className="text-2xl sm:text-4xl font-bold text-center mb-5">
           Tiendas Asociadas
