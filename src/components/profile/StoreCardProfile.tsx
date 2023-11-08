@@ -6,9 +6,13 @@ import useStore from "@/hooks/useStore";
 
 interface StoreCardProfileProps {
   storeId: number;
+  onUpdateProfile: () => void;
 }
 
-const StoreCardProfile = ({ storeId }: StoreCardProfileProps) => {
+const StoreCardProfile = ({
+  storeId,
+  onUpdateProfile,
+}: StoreCardProfileProps) => {
   const [store, setStore] = useState<StoreData | null>(null);
 
   useEffect(() => {
@@ -22,7 +26,7 @@ const StoreCardProfile = ({ storeId }: StoreCardProfileProps) => {
     };
 
     getStore();
-  }, []);
+  }, [onUpdateProfile]);
 
   if (!store) {
     return (

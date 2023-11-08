@@ -61,7 +61,10 @@ const ProfilePage = () => {
         />
       )}
       {userData.storeId !== null && (
-        <StoreCardProfile storeId={userData.storeId} />
+        <StoreCardProfile
+          storeId={userData.storeId}
+          onUpdateProfile={onUpdateProfile}
+        />
       )}
       {userData.role === "Admin" && (
         <TableStores stores={storeData} onUpdateProfile={onUpdateProfile} />
