@@ -2,8 +2,8 @@ import useSWR from "swr";
 
 //import fetcher from "@/libs/fetcher";
 
-const useEmployees = () => {
-  const { data, error, isLoading, mutate } = useSWR("/api/employees");
+const useGetProducts = () => {
+  const { data, error, isLoading, mutate } = useSWR("/api/products");
 
   return {
     data,
@@ -13,4 +13,4 @@ const useEmployees = () => {
   };
 };
 
-export default useEmployees;
+export default useGetProducts;

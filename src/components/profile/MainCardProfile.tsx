@@ -4,9 +4,16 @@ import ImgProfile from "../../../public/ImgProfile.png";
 import { Button } from "@mui/material";
 
 import ModalAddStore from "./ModalAddStore";
+import UserData from "@/types/UserData";
 
-const MainCardProfile = ({ UserData }: any) => {
+interface MainCardProfileProps {
+  userData: UserData;
+}
+
+const MainCardProfile = ({ userData }: MainCardProfileProps) => {
   const [openModalStore, setOpenModalStore] = useState(false);
+
+  console.log(userData);
 
   const handleViewModalStore = () => {
     setOpenModalStore(true);
@@ -17,15 +24,15 @@ const MainCardProfile = ({ UserData }: any) => {
       <div className="p-4 sm:p-8 md:p-12 border rounded-lg shadow-lg bg-white flex flex-col-reverse md:flex-row gap-4 sm:gap-20">
         <div className="text-center flex flex-col justify-center">
           <p className="text-3xl sm:text-4xl font-bold">
-            Bienvenido a tu perfil, {UserData.name}
+            Bienvenido a tu perfil, {userData.name}
           </p>
-          <p className="text-sm text-gray-600">ID: {UserData.id}</p>
+          <p className="text-sm text-gray-600">ID: {userData.id}</p>
           <p className="text-2xl sm:text-2xl font-semibold mt-5">
-            Nombre de Usuario: {UserData.username}
+            Nombre de Usuario: {userData.username}
           </p>
-          <p className="text-sm text-gray-600">Rol: {UserData.role}</p>
+          <p className="text-sm text-gray-600">Rol: {userData.role}</p>
           <div className="mt-5">
-            {UserData.role === "Admin" && (
+            {userData.role === "Admin" && (
               <Button onClick={handleViewModalStore}>Agregar Tienda</Button>
             )}
           </div>

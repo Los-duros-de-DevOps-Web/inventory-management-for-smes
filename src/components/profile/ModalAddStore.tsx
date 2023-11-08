@@ -17,7 +17,12 @@ const style = {
   p: 4,
 };
 
-const ModalAddStore = ({ setOpenModal, openModal }: any) => {
+interface ModalAddStoreProps {
+  setOpenModal: (openModal: boolean) => void;
+  openModal: boolean;
+}
+
+const ModalAddStore = ({ setOpenModal, openModal }: ModalAddStoreProps) => {
   const handleClose = () => setOpenModal(false);
 
   return (

@@ -38,8 +38,8 @@ model Product {
   quantityInStock Int
   image           String?
   lowStockRange   Int
-  inventory       Inventory       @relation("ProductInventory", fields: [inventoryId], references: [id])
-  inventoryId     Int
+  inventory       Inventory?      @relation("ProductInventory", fields: [inventoryId], references: [id])
+  inventoryId     Int?
   lowStockAlarms  LowStockAlarm[] @relation("ProductLowStockAlarm")
 }
 

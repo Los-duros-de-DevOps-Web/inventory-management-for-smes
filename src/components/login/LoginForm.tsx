@@ -52,7 +52,7 @@ export default function LoginForm() {
             sx={{
               backgroundImage: "url(https://source.unsplash.com/random)",
               backgroundRepeat: "no-repeat",
-              backgroundColor: (t) =>
+              backgroundColor: (t: any) =>
                 t.palette.mode === "light"
                   ? t.palette.grey[50]
                   : t.palette.grey[900],

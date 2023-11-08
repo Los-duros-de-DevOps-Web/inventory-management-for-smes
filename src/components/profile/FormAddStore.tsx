@@ -1,14 +1,19 @@
-import React, { use, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
+import UserData from "@/types/UserData";
 import TextField from "@mui/material/TextField";
 import TableEmployeesG from "./TableEmployeesG";
 import { Button } from "@mui/material";
 import useAddStore from "@/hooks/useAddStore";
 
-const FormAddStore = ({ handleClose }: any) => {
-  const [employees, setEmployees]: any = useState([]);
-  const [nameStore, setNameStore] = useState("");
+interface FormAddStoreProps {
+  handleClose: () => void;
+}
 
-  const handleNameStore = (e: any) => {
+const FormAddStore = ({ handleClose }: FormAddStoreProps) => {
+  const [employees, setEmployees]: any = useState<UserData[]>([]);
+  const [nameStore, setNameStore] = useState<string | null>(null);
+
+  const handleNameStore = (e: ChangeEvent<HTMLInputElement>) => {
     setNameStore(e.target.value);
   };
 
@@ -17,7 +22,7 @@ const FormAddStore = ({ handleClose }: any) => {
     handleClose();
   };
 
-  const updateNewEmployees = (newEmployees: any) => {
+  const updateNewEmployees = (newEmployees: UserData[]) => {
     setEmployees(newEmployees);
   };
 

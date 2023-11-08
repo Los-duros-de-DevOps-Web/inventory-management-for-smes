@@ -19,7 +19,9 @@ const TableStores = () => {
     stores && setStores(stores);
   }, [stores]);
 
-  const onRefresh = () => {};
+  const onRefresh = () => {
+    // stores = useStores().data;
+  };
 
   return (
     <div className="mx-auto mt-3 mb-10">

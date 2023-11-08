@@ -1,30 +1,45 @@
 import React, { useState, useEffect } from "react";
+import useEmployee from "@/hooks/useEmployee";
+import { toast } from "react-hot-toast";
+import UserData from "@/types/UserData";
 import { Button } from "@mui/material";
 import { ClipLoader } from "react-spinners";
-import useAvailableEmp from "@/hooks/useAvailableEmp";
 
-const TableEmployeesG = ({ updateNewEmployees }: any) => {
-  const employees = useAvailableEmp().data;
+interface TableEmployeesGProps {
+  updateNewEmployees: (newEmployees: UserData[]) => void;
+}
 
-  const [stEmployees, setStEmployees] = useState([]);
-  const [newEmployees, setNewEmployee]: any = useState([]);
+const TableEmployeesG = ({ updateNewEmployees }: TableEmployeesGProps) => {
+  const [stEmployees, setStEmployees] = useState<UserData[]>([]);
+  const [newEmployees, setNewEmployee] = useState<UserData[]>([]);
 
   useEffect(() => {
-    if (employees) {
-      setStEmployees(employees);
-    }
-  }, [employees]);
+    const getAvailableEmployees = async () => {
+      try {
+        const response = await useEmployee.useAvailableEmp();
+        const employees = response.data;
+        setStEmployees(employees);
+      } catch (error) {
+        toast.error("Error al cargar los empleados");
+      }
+    };
 
-  const onAddEmployee = (employee: any) => {
-    setNewEmployee((prevNewEmployees: any) => [...prevNewEmployees, employee]);
-    setStEmployees(stEmployees.filter((e: any) => e.id !== employee.id));
+    getAvailableEmployees();
+  }, []);
+
+  const onAddEmployee = (employee: UserData) => {
+    setNewEmployee((prevNewEmployees: UserData[]) => [
+      ...prevNewEmployees,
+      employee,
+    ]);
+    setStEmployees(stEmployees.filter((e: UserData) => e.id !== employee.id));
   };
 
   useEffect(() => {
     updateNewEmployees(newEmployees);
   }, [newEmployees]);
 
-  if (!employees) {
+  if (!stEmployees) {
     return (
       <div className="flex justify-center items-center h-full">
         <ClipLoader color="lightblue" size={80} />
@@ -51,8 +66,8 @@ const TableEmployeesG = ({ updateNewEmployees }: any) => {
         </tr>
       </thead>
       <tbody>
-        {employees &&
-          stEmployees.map((employee: any, index: number) => {
+        {stEmployees &&
+          stEmployees.map((employee: UserData, index: number) => {
             return (
               <tr
                 className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
