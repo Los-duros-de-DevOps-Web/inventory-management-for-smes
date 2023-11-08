@@ -3,8 +3,8 @@ import UserData from "@/types/UserData";
 import TextField from "@mui/material/TextField";
 import TableEmployeesG from "./TableEmployeesG";
 import { Button } from "@mui/material";
-import useAddStore from "@/hooks/useAddStore";
 import { toast } from "react-hot-toast";
+import useStore from "@/hooks/useStore";
 
 interface FormAddStoreProps {
   handleClose: () => void;
@@ -19,10 +19,10 @@ const FormAddStore = ({ handleClose, onUpdateProfile }: FormAddStoreProps) => {
     setNameStore(e.target.value);
   };
 
-  const onAddStore = () => {
+  const onAddStore = async () => {
     if (!nameStore) return toast.error("Ingresa el nombre de la tienda");
 
-    useAddStore({ nameStore, employees });
+    await useStore.useAddStore(nameStore, employees);
     onUpdateProfile();
     handleClose();
   };
