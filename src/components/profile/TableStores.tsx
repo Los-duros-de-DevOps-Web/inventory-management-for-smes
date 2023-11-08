@@ -1,12 +1,16 @@
-import useStores from "@/hooks/useStores";
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ModalEditEmployee from "./ModalEditEmployee";
+import StoreData from "@/types/StoreData";
 
-const TableStores = () => {
-  const stores = useStores().data;
-  const [stStores, setStores]: any = useState([]);
-  const [selectStore, setSelectStore] = useState(0);
+interface TableStoresProps {
+  stores: StoreData[];
+  onUpdateProfile: () => void;
+}
+
+const TableStores = ({ stores, onUpdateProfile }: TableStoresProps) => {
+  const [stStores, setStores] = useState<StoreData[]>([]);
+  const [selectStore, setSelectStore] = useState<number>(0);
 
   const [openModalEmployee, setOpenModalEmployee] = useState(false);
 
@@ -16,12 +20,10 @@ const TableStores = () => {
   };
 
   useEffect(() => {
-    stores && setStores(stores);
+    setStores(stores);
   }, [stores]);
 
-  const onRefresh = () => {
-    // stores = useStores().data;
-  };
+  if (!stores) return <p>No hay tiendas</p>;
 
   return (
     <div className="mx-auto mt-3 mb-10">
@@ -72,14 +74,12 @@ const TableStores = () => {
             })}
         </tbody>
       </table>
-      <div className="flex justify-center">
-        <Button onClick={onRefresh}>Refrescar vista</Button>
-      </div>
       {openModalEmployee && (
         <ModalEditEmployee
           openModal={openModalEmployee}
           setOpenModal={setOpenModalEmployee}
           storeId={selectStore}
+          onUpdateProfile={onUpdateProfile}
         />
       )}
     </div>

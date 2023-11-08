@@ -16,8 +16,6 @@ const serverAuth = async (req: NextApiRequest) => {
     },
   });
 
-  console.log(session.user);
-
   if (!currentUser) {
     throw new Error(currentUser + " not found");
   }

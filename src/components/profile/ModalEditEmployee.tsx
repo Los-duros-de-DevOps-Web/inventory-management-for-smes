@@ -17,7 +17,19 @@ const style = {
   p: 4,
 };
 
-const ModalEditEmployee = ({ setOpenModal, openModal, storeId }: any) => {
+interface ModalEditEmployeeProps {
+  setOpenModal: (openModal: boolean) => void;
+  openModal: boolean;
+  storeId: number;
+  onUpdateProfile: () => void;
+}
+
+const ModalEditEmployee = ({
+  setOpenModal,
+  openModal,
+  storeId,
+  onUpdateProfile,
+}: ModalEditEmployeeProps) => {
   const handleClose = () => setOpenModal(false);
 
   return (
@@ -35,7 +47,10 @@ const ModalEditEmployee = ({ setOpenModal, openModal, storeId }: any) => {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             A continuación podras ver los empleados de tu tienda
           </Typography>
-          <TableEmployeeDel storeId={storeId} />
+          <TableEmployeeDel
+            storeId={storeId}
+            onUpdateProfile={onUpdateProfile}
+          />
         </Box>
       </Modal>
     </div>

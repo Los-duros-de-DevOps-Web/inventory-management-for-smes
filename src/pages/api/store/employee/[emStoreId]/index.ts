@@ -10,7 +10,6 @@ export default async function handler(
   }
   try {
     const { emStoreId } = req.query;
-    console.log(emStoreId);
 
     const employees = await prisma.employee.findMany({
       where: { storeId: Number(emStoreId) },

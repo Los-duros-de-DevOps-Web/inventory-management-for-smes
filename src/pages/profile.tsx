@@ -8,28 +8,40 @@ import StoreCardProfile from "@/components/profile/StoreCardProfile";
 import TableStores from "@/components/profile/TableStores";
 import toast from "react-hot-toast";
 import UserData from "@/types/UserData";
+import StoreData from "@/types/StoreData";
+import useStore from "@/hooks/useStore";
 
 const ProfilePage = () => {
   const [userData, setUserData]: any = useState<UserData | null>(null);
+  const [storeData, setStoreData]: any = useState<StoreData[] | null>(null);
 
   const fetchUserData = async () => {
     try {
       const response = await useCurrentUser();
       const userData: UserData = response.data;
       setUserData(userData);
-      console.log(userData);
     } catch (error) {
       toast.error("Error al cargar el usuario");
     }
   };
 
+  const fetchStoreData = async () => {
+    try {
+      const response = await useStore.useStores();
+      const storeData: StoreData[] = response.data;
+      setStoreData(storeData);
+    } catch (error) {
+      toast.error("Error al cargar la tienda");
+    }
+  };
+
   const onUpdateProfile = () => {
-    console.log("update profile");
     fetchUserData();
+    fetchStoreData();
   };
 
   useEffect(() => {
-    fetchUserData();
+    onUpdateProfile();
   }, []);
 
   if (!userData) {
@@ -51,7 +63,9 @@ const ProfilePage = () => {
       {userData.storeId !== null && (
         <StoreCardProfile storeId={userData.storeId} />
       )}
-      {userData.role === "Admin" && <TableStores />}
+      {userData.role === "Admin" && (
+        <TableStores stores={storeData} onUpdateProfile={onUpdateProfile} />
+      )}
     </div>
   );
 };
