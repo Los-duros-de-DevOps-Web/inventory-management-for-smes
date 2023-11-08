@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-import useGetProducts from "@/hooks/useGetProducts";
 import { Button } from "@mui/material";
+import ProductData from "@/types/ProductData";
 
-const ListProducts = () => {
-  const getProducts = useGetProducts().data;
-  const [products, setProducts]: any = useState([]);
+interface ListProductsProps {
+  products: ProductData[];
+}
+
+const ListProducts = ({ products }: ListProductsProps) => {
+  const [stProducts, setProducts] = useState<ProductData[]>([]);
 
   useEffect(() => {
-    if (getProducts) {
-      setProducts(getProducts);
-    }
-  }, [getProducts]);
+    setProducts(products);
+  }, [products]);
 
   return (
     <>
-      {products ? (
+      {stProducts ? (
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 bg-white">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="text-center">

@@ -1,35 +1,49 @@
 import { Grid, Button, TextField } from "@mui/material";
 import React, { useRef, useState } from "react";
-import useAddProduct from "@/hooks/useAddProduct";
+import useProducts from "@/hooks/useProducts";
 
-const dataProduct = {
+const dataProductForm = {
   productName: "",
   productDetails: "",
   quantityInStock: 0,
   lowStockRange: 0,
 };
 
-export const FormProduct = () => {
-  const [product, setProduct] = useState(dataProduct);
-  const fileInputRef: any = useRef(null);
+interface FormProductProps {
+  setOpenForm: (open: boolean) => void;
+  onUpdateProducts: () => void;
+}
+
+export const FormProduct = ({
+  setOpenForm,
+  onUpdateProducts,
+}: FormProductProps) => {
+  const [product, setProduct] = useState(dataProductForm);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileInputChange = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileSelected = (event: any) => {
-    const selectedFile = event.target.files[0];
-    console.log("Archivo seleccionado:", selectedFile);
+  const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const selectedFile = event.target.files[0];
+      console.log("Archivo seleccionado:", selectedFile);
+    }
   };
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setProduct({ ...product, [name]: value });
   };
 
-  const onSubmit = () => {
-    useAddProduct(product);
+  const onSubmit = async () => {
+    setProduct(dataProductForm);
+    await useProducts.useAddProduct(product);
+    onUpdateProducts();
+    setOpenForm(false);
   };
+
   return (
     <div className="w-[100%] flex justify-center ">
       <Grid container spacing={2} sx={{ width: "70%" }}>
@@ -48,8 +62,9 @@ export const FormProduct = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={product.productDetails}
                 fullWidth
-                id="outlined-multiline-flexible"
+                id="productDetails"
                 name="productDetails"
                 multiline
                 onChange={handleInputChange}
@@ -60,11 +75,12 @@ export const FormProduct = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={product.quantityInStock}
                 onChange={handleInputChange}
                 name="quantityInStock"
                 type="number"
                 fullWidth
-                id="outlined-multiline-flexible"
+                id="quantityInStock"
                 label="Cantidad a agregar"
                 variant="outlined"
               />
@@ -82,11 +98,12 @@ export const FormProduct = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={product.lowStockRange}
                 onChange={handleInputChange}
                 name="lowStockRange"
                 type="number"
                 fullWidth
-                id="outlined-multiline-flexible"
+                id="lowStockRange"
                 label="Cantidad minima para notificar"
                 variant="outlined"
               />
