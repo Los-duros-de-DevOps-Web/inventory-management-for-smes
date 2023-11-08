@@ -1,15 +1,35 @@
-import React from "react";
-import useGetStore from "@/hooks/useGetStore";
+import React, { useEffect, useState } from "react";
+import StoreData from "@/types/StoreData";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-hot-toast";
+import useStore from "@/hooks/useStore";
 
-const StoreCardProfile = ({ storeId }: any) => {
-  console.log(storeId);
+interface StoreCardProfileProps {
+  storeId: number;
+}
 
-  const store = useGetStore(storeId).data;
+const StoreCardProfile = ({ storeId }: StoreCardProfileProps) => {
+  const [store, setStore] = useState<StoreData | null>(null);
+
+  useEffect(() => {
+    const getStore = async () => {
+      try {
+        const response = await useStore.useGetStore(storeId);
+        setStore(response.data);
+      } catch (error) {
+        toast.error("Error al cargar la tienda");
+      }
+    };
+
+    getStore();
+  }, []);
 
   if (!store) {
-    return <div>Loading...</div>;
-  } else {
-    console.log(store);
+    return (
+      <div className="flex justify-center items-center h-full">
+        <ClipLoader color="lightblue" size={80} />
+      </div>
+    );
   }
 
   return (

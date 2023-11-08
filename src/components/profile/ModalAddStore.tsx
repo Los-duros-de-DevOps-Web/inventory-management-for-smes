@@ -20,9 +20,14 @@ const style = {
 interface ModalAddStoreProps {
   setOpenModal: (openModal: boolean) => void;
   openModal: boolean;
+  onUpdateProfile: () => void;
 }
 
-const ModalAddStore = ({ setOpenModal, openModal }: ModalAddStoreProps) => {
+const ModalAddStore = ({
+  setOpenModal,
+  openModal,
+  onUpdateProfile,
+}: ModalAddStoreProps) => {
   const handleClose = () => setOpenModal(false);
 
   return (
@@ -40,7 +45,10 @@ const ModalAddStore = ({ setOpenModal, openModal }: ModalAddStoreProps) => {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             A continuación deberás de ingresar la información para la tienda
           </Typography>
-          <FormAddStore handleClose={handleClose} />
+          <FormAddStore
+            handleClose={handleClose}
+            onUpdateProfile={onUpdateProfile}
+          />
         </Box>
       </Modal>
     </div>

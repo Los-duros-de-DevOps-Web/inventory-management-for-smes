@@ -4,12 +4,14 @@ import TextField from "@mui/material/TextField";
 import TableEmployeesG from "./TableEmployeesG";
 import { Button } from "@mui/material";
 import useAddStore from "@/hooks/useAddStore";
+import { toast } from "react-hot-toast";
 
 interface FormAddStoreProps {
   handleClose: () => void;
+  onUpdateProfile: () => void;
 }
 
-const FormAddStore = ({ handleClose }: FormAddStoreProps) => {
+const FormAddStore = ({ handleClose, onUpdateProfile }: FormAddStoreProps) => {
   const [employees, setEmployees]: any = useState<UserData[]>([]);
   const [nameStore, setNameStore] = useState<string | null>(null);
 
@@ -18,7 +20,10 @@ const FormAddStore = ({ handleClose }: FormAddStoreProps) => {
   };
 
   const onAddStore = () => {
+    if (!nameStore) return toast.error("Ingresa el nombre de la tienda");
+
     useAddStore({ nameStore, employees });
+    onUpdateProfile();
     handleClose();
   };
 

@@ -8,12 +8,14 @@ import UserData from "@/types/UserData";
 
 interface MainCardProfileProps {
   userData: UserData;
+  onUpdateProfile: () => void;
 }
 
-const MainCardProfile = ({ userData }: MainCardProfileProps) => {
+const MainCardProfile = ({
+  userData,
+  onUpdateProfile,
+}: MainCardProfileProps) => {
   const [openModalStore, setOpenModalStore] = useState(false);
-
-  console.log(userData);
 
   const handleViewModalStore = () => {
     setOpenModalStore(true);
@@ -49,6 +51,7 @@ const MainCardProfile = ({ userData }: MainCardProfileProps) => {
       </div>
       {openModalStore && (
         <ModalAddStore
+          onUpdateProfile={onUpdateProfile}
           openModal={openModalStore}
           setOpenModal={setOpenModalStore}
         />
