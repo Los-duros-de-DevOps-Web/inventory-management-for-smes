@@ -26,9 +26,14 @@ const useGetProducts = () => {
   return axios.get("/api/products");
 };
 
+const useDeleteProduct = (delProduct: number) => {
+  return axios.delete(`/api/products/delete/${delProduct}`);
+};
+
 const useProducts = {
   useAddProduct,
   useGetProducts,
+  useDeleteProduct,
 };
 
 export default useProducts;

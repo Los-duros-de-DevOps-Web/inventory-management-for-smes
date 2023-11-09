@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import ProductData from "@/types/ProductData";
+import useProducts from "@/hooks/useProducts";
 
 interface ListProductsProps {
   products: ProductData[];
@@ -12,6 +13,11 @@ const ListProducts = ({ products }: ListProductsProps) => {
   useEffect(() => {
     setProducts(products);
   }, [products]);
+
+  const deleteProduct = async (id: number) => {
+    await useProducts.useDeleteProduct(id);
+    setProducts(stProducts.filter((product: ProductData) => product.id !== id));
+  };
 
   return (
     <>
@@ -37,7 +43,7 @@ const ListProducts = ({ products }: ListProductsProps) => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product: any, index: number) => {
+            {stProducts.map((product: ProductData, index: number) => {
               return (
                 <tr key={index} className="text-center">
                   <td>{product.name}</td>
@@ -48,9 +54,14 @@ const ListProducts = ({ products }: ListProductsProps) => {
                     <td>No tiene Inventario</td>
                   )}
                   <td>{product.lowStockRange}</td>
-                  <td>
+                  <td className="flex justify-center gap-3">
                     <Button>Editar</Button>
-                    <Button>Eliminar</Button>
+                    <Button
+                      sx={{ color: "red" }}
+                      onClick={() => deleteProduct(product.id)}
+                    >
+                      Eliminar
+                    </Button>
                   </td>
                 </tr>
               );
