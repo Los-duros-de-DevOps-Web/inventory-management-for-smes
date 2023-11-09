@@ -50,7 +50,7 @@ const MainProducts = () => {
         )}
       </div>
       <div>
-        <ListProducts products={products} />
+        <ListProducts products={products} onUpdateProducts={onUpdateProducts} />
       </div>
     </>
   );

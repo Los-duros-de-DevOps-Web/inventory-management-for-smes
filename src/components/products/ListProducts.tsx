@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import ProductData from "@/types/ProductData";
 import useProducts from "@/hooks/useProducts";
+import ModalEditProduct from "./ModalEditProduct";
 
 interface ListProductsProps {
   products: ProductData[];
+  onUpdateProducts: () => void;
 }
 
-const ListProducts = ({ products }: ListProductsProps) => {
+const ListProducts = ({ products, onUpdateProducts }: ListProductsProps) => {
   const [stProducts, setProducts] = useState<ProductData[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedPoroduct, setSelectedProduct] = useState<ProductData | null>(
+    null
+  );
 
   useEffect(() => {
     setProducts(products);
@@ -17,6 +23,11 @@ const ListProducts = ({ products }: ListProductsProps) => {
   const deleteProduct = async (id: number) => {
     await useProducts.useDeleteProduct(id);
     setProducts(stProducts.filter((product: ProductData) => product.id !== id));
+  };
+
+  const selectProduct = (product: ProductData) => {
+    setOpenModal(!openModal);
+    setSelectedProduct(product);
   };
 
   return (
@@ -55,7 +66,9 @@ const ListProducts = ({ products }: ListProductsProps) => {
                   )}
                   <td>{product.lowStockRange}</td>
                   <td className="flex justify-center gap-3">
-                    <Button>Editar</Button>
+                    <Button onClick={() => selectProduct(product)}>
+                      Editar
+                    </Button>
                     <Button
                       sx={{ color: "red" }}
                       onClick={() => deleteProduct(product.id)}
@@ -72,6 +85,14 @@ const ListProducts = ({ products }: ListProductsProps) => {
         <div className="flex justify-center">
           <b className="text-3xl">No Existen Productos en tu Tienda</b>
         </div>
+      )}
+      {selectedPoroduct && (
+        <ModalEditProduct
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          product={selectedPoroduct}
+          onUpdateProducts={onUpdateProducts}
+        />
       )}
     </>
   );
