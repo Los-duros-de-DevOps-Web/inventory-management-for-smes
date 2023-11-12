@@ -10,7 +10,6 @@ export default async function handler(
   }
   try {
     const { productId } = req.query;
-    console.log(productId);
 
     const product: any = await prisma.product.update({
       where: { id: Number(productId) },

@@ -9,19 +9,11 @@ export default async function handler(
     return res.status(405).end();
   }
   try {
-    const { storeId } = req.query;
+    const lowStockAlarm = await prisma.lowStockAlarm.findMany({});
 
-    const inventory: any = await prisma.inventory.findMany({
-      where: { storeId: Number(storeId) },
-      include: {
-        products: true,
-      },
-    });
-
-    return res.status(200).json(inventory);
+    return res.status(200).json(lowStockAlarm);
   } catch (error) {
     console.log(error);
-
     return res.status(400).end();
   }
 }

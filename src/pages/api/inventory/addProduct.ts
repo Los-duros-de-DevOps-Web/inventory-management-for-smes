@@ -20,7 +20,6 @@ export default async function handler(
     return res.status(200).json(inventory);
   } catch (error) {
     console.log(error);
-
     return res.status(500).end();
   }
 }

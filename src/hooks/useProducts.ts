@@ -60,11 +60,16 @@ const useUpdateProduct = (productID: number, productForm: ProductData) => {
   );
 };
 
+const useGetLowProducts = () => {
+  return axios.get("/api/products/lowProducts");
+};
+
 const useProducts = {
   useAddProduct,
   useGetProducts,
   useDeleteProduct,
   useUpdateProduct,
+  useGetLowProducts,
 };
 
 export default useProducts;

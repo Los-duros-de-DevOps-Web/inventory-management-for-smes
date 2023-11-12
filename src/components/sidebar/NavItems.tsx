@@ -42,7 +42,7 @@ export const NavItems: NavItem[] = [
   },
   {
     label: "Notificaciones",
-    href: "/calendar",
+    href: "/notify",
     icon: <IoIosNotifications className="w-6 h-6" />,
   },
   {

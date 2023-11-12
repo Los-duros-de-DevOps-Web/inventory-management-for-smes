@@ -60,6 +60,15 @@ const CardInventory = ({
 
   useEffect(() => {
     onShowDetails();
+  }, []);
+
+  useEffect(() => {
+    onShowDetails();
+    updateInventory();
+  }, [inventory]);
+
+  useEffect(() => {
+    onShowDetails();
     updateInventory();
   }, [openModal]);
 
