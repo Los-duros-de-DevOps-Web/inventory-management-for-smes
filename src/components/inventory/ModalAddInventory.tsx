@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 import TableProductsInv from "./TableProductsInv";
 import ProductData from "@/types/ProductData";
 import TableProductsAdded from "./TableProductsAdded";
+import useInventory from "@/hooks/useInventory";
 
 const style = {
   position: "absolute" as "absolute",
@@ -26,11 +27,13 @@ const style = {
 interface ModalAddInventoryProps {
   setOpenModal: (openModal: boolean) => void;
   openModal: boolean;
+  storeId: number;
 }
 
 const ModalAddInventory = ({
   setOpenModal,
   openModal,
+  storeId,
 }: ModalAddInventoryProps) => {
   const handleClose = () => setOpenModal(false);
 
@@ -41,11 +44,17 @@ const ModalAddInventory = ({
     try {
       const response = await useProducts.useGetProducts();
       const products: ProductData[] = response.data;
-      const filterProduct = products.filter(
-        (product: ProductData) =>
-          product.quantityInStock > 0 || product.inventory
-      );
-      setAllProducts(filterProduct);
+      const filterProducts: ProductData[] = [];
+
+      products.forEach((product: ProductData) => {
+        if (product.quantityInStock !== 0) {
+          if (product.inventoryId === null) {
+            filterProducts.push(product);
+          }
+        }
+      });
+
+      setAllProducts(filterProducts);
     } catch (error) {
       toast.error("Error al cargar los productos");
     }
@@ -63,6 +72,23 @@ const ModalAddInventory = ({
     setSelectedProducts(
       selectedProducts.filter((p: ProductData) => p.id !== product.id)
     );
+  };
+
+  const onAddInventory = async () => {
+    try {
+      const response = await useInventory.addInventory(storeId);
+
+      selectedProducts.forEach(async (product: ProductData) => {
+        await useInventory.addProductToInventory(response.data.id, product.id);
+      });
+
+      toast.success("Inventario agregado correctamente");
+      setOpenModal(false);
+      setSelectedProducts([]);
+      fetchProducts();
+    } catch (error) {
+      toast.error("Error al agregar el inventario");
+    }
   };
 
   return (
@@ -98,7 +124,7 @@ const ModalAddInventory = ({
             </div>
           </div>
           <div className="flex flex-row justify-center mt-5">
-            <Button>Agregar Inventario</Button>
+            <Button onClick={() => onAddInventory()}>Agregar Inventario</Button>
           </div>
         </Box>
       </Modal>

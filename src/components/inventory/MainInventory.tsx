@@ -67,7 +67,11 @@ const MainInventory = ({ userData }: MainInventoryProps) => {
           )}
         </div>
       </div>
-      <ModalAddInventory openModal={openModal} setOpenModal={setOpenModal} />
+      <ModalAddInventory
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        storeId={store?.id as number}
+      />
     </>
   );
 };
