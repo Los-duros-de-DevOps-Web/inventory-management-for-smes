@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import useProducts from "@/hooks/useProducts";
 
 import { Button } from "@mui/material";
@@ -41,6 +41,7 @@ const ModalAddInventory = ({
 
   const [allProducts, setAllProducts] = useState<ProductData[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
+  const [flag, setFlag] = useState<boolean>(false);
 
   const fetchProducts = async () => {
     try {
@@ -65,11 +66,23 @@ const ModalAddInventory = ({
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [selectedProducts]);
 
   useEffect(() => {
     fetchProducts();
-  }, [selectedProducts]);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setSelectedProducts([]);
+        await fetchProducts();
+      } catch (error) {
+        toast.error("Error al cargar los productos");
+      }
+    };
+    fetchData();
+  }, [flag]);
 
   const onAddProduct = (product: ProductData) => {
     setSelectedProducts([...selectedProducts, product]);
@@ -113,6 +126,7 @@ const ModalAddInventory = ({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Ingresa la información del inventario que deseas agregar
           </Typography>
+          <Button onClick={() => setFlag(!flag)}>Actualizar</Button>
           <div className="flex flex-row justify-around gap-6">
             <div className="text-center font-bold mt-8 border border-gray-400 p-5 rounded-lg">
               Productos Disponibles para agregar
