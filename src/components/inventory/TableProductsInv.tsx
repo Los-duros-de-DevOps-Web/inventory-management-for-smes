@@ -5,46 +5,37 @@ import { toast } from "react-hot-toast";
 import { Button } from "@mui/material";
 
 interface TableProductsInvProps {
-  onAddedProduct: (product: ProductData) => void;
-  backProduct: ProductData;
+  allProducts: ProductData[];
+  selectedProducts: ProductData[];
+  onAddProduct: (product: ProductData) => void;
 }
 
 const TableProductsInv = ({
-  onAddedProduct,
-  backProduct,
+  allProducts,
+  selectedProducts,
+  onAddProduct,
 }: TableProductsInvProps) => {
-  const [stProducts, setProducts] = useState<ProductData[]>([]);
+  const [stProducts, setProducts] = useState<ProductData[]>(allProducts);
 
-  const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
+  const getAvailableProducts = () => {
+    console.log("Hola que más");
 
-  const fetchProducts = async () => {
-    try {
-      const response = await useProducts.useGetProducts();
-      const products: ProductData[] = response.data;
-      const filterProduct = products.filter(
-        (product: ProductData) =>
-          product.quantityInStock > 0 || product.inventory
-      );
-      setProducts(filterProduct);
-    } catch (error) {
-      toast.error("Error al cargar los productos");
-    }
+    const productsNotInSelected = allProducts.filter(
+      (p) => !selectedProducts.some((selected) => selected.id === p.id)
+    );
+
+    console.log(productsNotInSelected);
+
+    setProducts(productsNotInSelected);
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    if (backProduct) {
-      setProducts([...stProducts, backProduct]);
-    }
-  }, [backProduct]);
+    getAvailableProducts();
+  }, [selectedProducts]);
 
   const AddProduct = (product: ProductData) => {
-    setSelectedProducts([...selectedProducts, product]);
     setProducts(stProducts.filter((p: ProductData) => p.id !== product.id));
-    onAddedProduct(product);
+    onAddProduct(product);
   };
 
   return (

@@ -5,28 +5,28 @@ import { toast } from "react-hot-toast";
 import { Button } from "@mui/material";
 
 interface TableProductsAddedProps {
-  addedProducts: ProductData[];
+  selectedProducts: ProductData[];
   onDeletedProduct: (product: ProductData) => void;
 }
 
 const TableProductsAdded = ({
-  addedProducts,
+  selectedProducts,
   onDeletedProduct,
 }: TableProductsAddedProps) => {
-  const [stProducts, setProducts] = useState<ProductData[]>([]);
+  const [products, setProducts] = useState<ProductData[]>(selectedProducts);
 
   useEffect(() => {
-    setProducts(addedProducts);
-  }, [addedProducts]);
+    setProducts(selectedProducts);
+  }, [selectedProducts]);
 
   const onDeleteProductList = (product: ProductData) => {
-    setProducts(stProducts.filter((p: ProductData) => p.id !== product.id));
+    setProducts(products.filter((p: ProductData) => p.id !== product.id));
     onDeletedProduct(product);
   };
 
   return (
     <>
-      {stProducts ? (
+      {products ? (
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 bg-white">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="text-center">
@@ -42,7 +42,7 @@ const TableProductsAdded = ({
             </tr>
           </thead>
           <tbody>
-            {stProducts.map((product: ProductData, index: number) => {
+            {products.map((product: ProductData, index: number) => {
               return (
                 <tr key={index} className="text-center">
                   <td>{product.name}</td>

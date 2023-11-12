@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import useProducts from "@/hooks/useProducts";
 
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import TableProductsInv from "./TableProductsInv";
-import ProductData from "@/types/ProductData";
-
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { toast } from "react-hot-toast";
+
+import TableProductsInv from "./TableProductsInv";
+import ProductData from "@/types/ProductData";
 import TableProductsAdded from "./TableProductsAdded";
 
 const style = {
@@ -32,14 +34,36 @@ const ModalAddInventory = ({
 }: ModalAddInventoryProps) => {
   const handleClose = () => setOpenModal(false);
 
-  const [addedProducts, setAddedProducts] = useState<ProductData[]>([]);
-  const [backProduct, setBackProduct] = useState<ProductData | null>(null);
+  const [allProducts, setAllProducts] = useState<ProductData[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
 
-  const onAddedProduct = (product: ProductData) => {
-    setAddedProducts([...addedProducts, product]);
+  const fetchProducts = async () => {
+    try {
+      const response = await useProducts.useGetProducts();
+      const products: ProductData[] = response.data;
+      const filterProduct = products.filter(
+        (product: ProductData) =>
+          product.quantityInStock > 0 || product.inventory
+      );
+      setAllProducts(filterProduct);
+    } catch (error) {
+      toast.error("Error al cargar los productos");
+    }
   };
 
-  const onDeleteProduct = (product: ProductData) => {};
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const onAddProduct = (product: ProductData) => {
+    setSelectedProducts([...selectedProducts, product]);
+  };
+
+  const onDeletedProduct = (product: ProductData) => {
+    setSelectedProducts(
+      selectedProducts.filter((p: ProductData) => p.id !== product.id)
+    );
+  };
 
   return (
     <div>
@@ -58,17 +82,18 @@ const ModalAddInventory = ({
           </Typography>
           <div className="flex flex-row justify-around gap-6">
             <div className="text-center font-bold mt-8 border border-gray-400 p-5 rounded-lg">
-              Productos Disponibles para agregar
+              Productos Disponibles para agregarm
               <TableProductsInv
-                onAddedProduct={onAddedProduct}
-                backProduct={backProduct as ProductData}
+                allProducts={allProducts}
+                selectedProducts={selectedProducts}
+                onAddProduct={onAddProduct}
               />
             </div>
             <div className="text-center font-bold mt-8 border border-blue-500 p-5 rounded-lg">
               Productos Agregados
               <TableProductsAdded
-                addedProducts={addedProducts}
-                onDeletedProduct={onDeleteProduct}
+                selectedProducts={selectedProducts}
+                onDeletedProduct={onDeletedProduct}
               />
             </div>
           </div>
