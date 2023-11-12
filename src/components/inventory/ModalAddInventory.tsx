@@ -28,12 +28,14 @@ interface ModalAddInventoryProps {
   setOpenModal: (openModal: boolean) => void;
   openModal: boolean;
   storeId: number;
+  updateInventory: () => void;
 }
 
 const ModalAddInventory = ({
   setOpenModal,
   openModal,
   storeId,
+  updateInventory,
 }: ModalAddInventoryProps) => {
   const handleClose = () => setOpenModal(false);
 
@@ -44,6 +46,7 @@ const ModalAddInventory = ({
     try {
       const response = await useProducts.useGetProducts();
       const products: ProductData[] = response.data;
+
       const filterProducts: ProductData[] = [];
 
       products.forEach((product: ProductData) => {
@@ -64,6 +67,10 @@ const ModalAddInventory = ({
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    fetchProducts();
+  }, [selectedProducts]);
+
   const onAddProduct = (product: ProductData) => {
     setSelectedProducts([...selectedProducts, product]);
   };
@@ -81,11 +88,11 @@ const ModalAddInventory = ({
       selectedProducts.forEach(async (product: ProductData) => {
         await useInventory.addProductToInventory(response.data.id, product.id);
       });
-
       toast.success("Inventario agregado correctamente");
       setOpenModal(false);
       setSelectedProducts([]);
       fetchProducts();
+      updateInventory();
     } catch (error) {
       toast.error("Error al agregar el inventario");
     }
@@ -108,7 +115,7 @@ const ModalAddInventory = ({
           </Typography>
           <div className="flex flex-row justify-around gap-6">
             <div className="text-center font-bold mt-8 border border-gray-400 p-5 rounded-lg">
-              Productos Disponibles para agregarm
+              Productos Disponibles para agregar
               <TableProductsInv
                 allProducts={allProducts}
                 selectedProducts={selectedProducts}

@@ -17,10 +17,15 @@ const addProductToInventory = (inventoryId: number, productId: number) => {
   });
 };
 
+const deleteProductFromInventory = (productId: number) => {
+  return axios.delete(`/api/inventory/del/${productId}`);
+};
+
 const useInventory = {
   getInventory,
   addInventory,
   addProductToInventory,
+  deleteProductFromInventory,
 };
 
 export default useInventory;

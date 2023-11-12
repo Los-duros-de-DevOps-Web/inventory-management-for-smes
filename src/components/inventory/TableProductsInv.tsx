@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useProducts from "@/hooks/useProducts";
 import ProductData from "@/types/ProductData";
-import { toast } from "react-hot-toast";
 import { Button } from "@mui/material";
 
 interface TableProductsInvProps {
@@ -18,16 +16,15 @@ const TableProductsInv = ({
   const [stProducts, setProducts] = useState<ProductData[]>(allProducts);
 
   const getAvailableProducts = () => {
-    console.log("Hola que más");
-
     const productsNotInSelected = allProducts.filter(
       (p) => !selectedProducts.some((selected) => selected.id === p.id)
     );
-
-    console.log(productsNotInSelected);
-
     setProducts(productsNotInSelected);
   };
+
+  useEffect(() => {
+    getAvailableProducts();
+  }, []);
 
   useEffect(() => {
     getAvailableProducts();

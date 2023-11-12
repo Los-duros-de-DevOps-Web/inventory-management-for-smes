@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useProducts from "@/hooks/useProducts";
 import ProductData from "@/types/ProductData";
-import { toast } from "react-hot-toast";
 import { Button } from "@mui/material";
 
 interface TableProductsAddedProps {
