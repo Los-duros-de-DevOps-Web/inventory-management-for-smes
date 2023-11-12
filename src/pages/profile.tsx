@@ -12,8 +12,8 @@ import StoreData from "@/types/StoreData";
 import useStore from "@/hooks/useStore";
 
 const ProfilePage = () => {
-  const [userData, setUserData]: any = useState<UserData | null>(null);
-  const [storeData, setStoreData]: any = useState<StoreData[] | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [storeData, setStoreData] = useState<StoreData[]>([]);
 
   const fetchUserData = async () => {
     try {

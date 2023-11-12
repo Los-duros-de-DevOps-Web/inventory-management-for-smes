@@ -33,8 +33,8 @@ const MainProducts = () => {
     <>
       <div className="mt-5 flex justify-center">
         <Button
-          variant="contained"
-          sx={{ padding: "18px" }}
+          variant="outlined"
+          sx={{ padding: "18px", color: "blue" }}
           onClick={() => setOpenForm(!openForm)}
         >
           Agregar Producto{" "}
