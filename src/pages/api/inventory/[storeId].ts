@@ -10,23 +10,21 @@ export default async function handler(
   }
   try {
     const { storeId } = req.query;
+    console.log(storeId);
 
     const inventory: any = await prisma.inventory.findMany({
-      where: { id: Number(storeId) },
+      where: { storeId: Number(storeId) },
       include: {
         products: true,
       },
     });
 
-    let countProducts = 0;
-
-    if (inventory) {
-      countProducts = inventory.products.length;
-    }
+    console.log(inventory);
 
     return res.status(200).json(inventory);
   } catch (error) {
     console.log(error);
+
     return res.status(400).end();
   }
 }
