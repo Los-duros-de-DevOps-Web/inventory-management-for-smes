@@ -28,6 +28,7 @@ interface ModalAddInventoryProps {
   setOpenModal: (openModal: boolean) => void;
   openModal: boolean;
   storeId: number;
+  products: ProductData[];
   updateInventory: () => void;
 }
 
@@ -35,54 +36,17 @@ const ModalAddInventory = ({
   setOpenModal,
   openModal,
   storeId,
+  products,
   updateInventory,
 }: ModalAddInventoryProps) => {
   const handleClose = () => setOpenModal(false);
 
-  const [allProducts, setAllProducts] = useState<ProductData[]>([]);
+  const [allProducts, setAllProducts] = useState<ProductData[]>(products);
   const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
-  const [flag, setFlag] = useState<boolean>(false);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await useProducts.useGetProducts();
-      const products: ProductData[] = response.data;
-
-      const filterProducts: ProductData[] = [];
-
-      products.forEach((product: ProductData) => {
-        if (product.quantityInStock !== 0) {
-          if (product.inventoryId === null) {
-            filterProducts.push(product);
-          }
-        }
-      });
-
-      setAllProducts(filterProducts);
-    } catch (error) {
-      toast.error("Error al cargar los productos");
-    }
-  };
 
   useEffect(() => {
-    fetchProducts();
-  }, [selectedProducts]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setSelectedProducts([]);
-        await fetchProducts();
-      } catch (error) {
-        toast.error("Error al cargar los productos");
-      }
-    };
-    fetchData();
-  }, [flag]);
+    setAllProducts(products);
+  }, [products]);
 
   const onAddProduct = (product: ProductData) => {
     setSelectedProducts([...selectedProducts, product]);
@@ -104,7 +68,6 @@ const ModalAddInventory = ({
       toast.success("Inventario agregado correctamente");
       setOpenModal(false);
       setSelectedProducts([]);
-      fetchProducts();
       updateInventory();
     } catch (error) {
       toast.error("Error al agregar el inventario");
@@ -126,7 +89,6 @@ const ModalAddInventory = ({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Ingresa la información del inventario que deseas agregar
           </Typography>
-          <Button onClick={() => setFlag(!flag)}>Actualizar</Button>
           <div className="flex flex-row justify-around gap-6">
             <div className="text-center font-bold mt-8 border border-gray-400 p-5 rounded-lg">
               Productos Disponibles para agregar

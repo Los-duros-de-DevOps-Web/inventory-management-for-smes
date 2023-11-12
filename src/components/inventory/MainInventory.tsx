@@ -3,10 +3,12 @@ import { Button } from "@mui/material";
 import StoreData from "@/types/StoreData";
 import { toast } from "react-hot-toast";
 import ModalAddInventory from "./ModalAddInventory";
+import ProductData from "@/types/ProductData";
 import CardInventory from "./CardInventory";
 import InventoryData from "@/types/InventoryData";
 import useInventory from "@/hooks/useInventory";
 import { ClipLoader } from "react-spinners";
+import useProducts from "@/hooks/useProducts";
 
 interface MainInventoryProps {
   storeData: StoreData;
@@ -14,6 +16,7 @@ interface MainInventoryProps {
 
 const MainInventory = ({ storeData }: MainInventoryProps) => {
   const [inventory, setInventory] = useState<InventoryData[]>([]);
+  const [products, setProducts] = useState<ProductData[]>([]);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const fetchInventoryData = async () => {
@@ -26,12 +29,28 @@ const MainInventory = ({ storeData }: MainInventoryProps) => {
     }
   };
 
+  const fetchProductsData = async () => {
+    try {
+      const response = await useProducts.useGetProducts();
+      const products: ProductData[] = response.data;
+
+      const filteredProducts = products.filter((product: ProductData) => {
+        return product.quantityInStock !== 0 && product.inventoryId === null;
+      });
+
+      setProducts(filteredProducts);
+    } catch (error) {
+      toast.error("Error al cargar los productos");
+    }
+  };
+
   const updateInventory = () => {
     fetchInventoryData();
+    fetchProductsData();
   };
 
   useEffect(() => {
-    fetchInventoryData();
+    updateInventory();
   }, []);
 
   if (!storeData) {
@@ -76,12 +95,15 @@ const MainInventory = ({ storeData }: MainInventoryProps) => {
           </div>
         </div>
       </div>
-      <ModalAddInventory
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        storeId={storeData.id}
-        updateInventory={updateInventory}
-      />
+      {products && (
+        <ModalAddInventory
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          storeId={storeData.id}
+          products={products}
+          updateInventory={updateInventory}
+        />
+      )}
     </>
   );
 };

@@ -59,11 +59,6 @@ const CardInventory = ({
   };
 
   useEffect(() => {
-    updateInventory();
-    onShowDetails();
-  }, []);
-
-  useEffect(() => {
     onShowDetails();
     updateInventory();
   }, [openModal]);
