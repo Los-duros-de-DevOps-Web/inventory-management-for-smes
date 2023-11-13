@@ -64,12 +64,20 @@ const useGetLowProducts = () => {
   return axios.get("/api/products/lowProducts");
 };
 
+const useMinusStock = (productId: number, productMinus: number) => {
+  return axios.put("/api/products/minusStock", {
+    productId,
+    productMinus,
+  });
+};
+
 const useProducts = {
   useAddProduct,
   useGetProducts,
   useDeleteProduct,
   useUpdateProduct,
   useGetLowProducts,
+  useMinusStock,
 };
 
 export default useProducts;

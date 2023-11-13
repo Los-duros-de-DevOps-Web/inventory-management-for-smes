@@ -48,6 +48,7 @@ const MainOrder = ({ storeData }: MainOrderProps) => {
           openModal={openAddOrder}
           setOpenModal={setOpenAddOrder}
           products={products}
+          storeId={storeData.id}
         />
       )}
     </div>

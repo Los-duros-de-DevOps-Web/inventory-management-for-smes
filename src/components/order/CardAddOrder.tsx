@@ -21,12 +21,14 @@ interface CardAddOrderProps {
   openModal: boolean;
   setOpenModal: (openModal: boolean) => void;
   products: ProductData[];
+  storeId: number;
 }
 
 const CardAddOrder = ({
   openModal,
   setOpenModal,
   products,
+  storeId,
 }: CardAddOrderProps) => {
   const handleClose = () => setOpenModal(false);
 
@@ -45,10 +47,7 @@ const CardAddOrder = ({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Ingresa la información de la orden a agregar
           </Typography>
-          <FormAddOrder products={products} />
-          <div className="flex flex-row justify-center mt-5">
-            <Button>Agregar Inventario</Button>
-          </div>
+          <FormAddOrder products={products} storeId={storeId} />
         </Box>
       </Modal>
     </div>
