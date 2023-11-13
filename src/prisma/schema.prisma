@@ -22,6 +22,7 @@ model Store {
   name      String
   employees Employee[]  @relation("StoreEmployee")
   inventory Inventory[] @relation("StoreInventory")
+  order     Order[]     @relation("StoreOrder")
 }
 
 model Inventory {
@@ -32,15 +33,16 @@ model Inventory {
 }
 
 model Product {
-  id              Int             @id @default(autoincrement())
+  id              Int               @id @default(autoincrement())
   name            String
   details         String
   quantityInStock Int
   image           String?
   lowStockRange   Int
-  inventory       Inventory?      @relation("ProductInventory", fields: [inventoryId], references: [id])
+  inventory       Inventory?        @relation("ProductInventory", fields: [inventoryId], references: [id])
   inventoryId     Int?
-  lowStockAlarms  LowStockAlarm[] @relation("ProductLowStockAlarm")
+  lowStockAlarms  LowStockAlarm[]   @relation("ProductLowStockAlarm")
+  OrderOnProducts OrderOnProducts[]
 }
 
 model LowStockAlarm {
@@ -49,4 +51,23 @@ model LowStockAlarm {
   description String
   product     Product  @relation("ProductLowStockAlarm", fields: [productId], references: [id])
   productId   Int
+}
+
+model Order {
+  id              Int               @id @default(autoincrement())
+  date            DateTime
+  nameClient      String
+  total           Float
+  OrderOnProducts OrderOnProducts[]
+  store           Store?            @relation("StoreOrder", fields: [storeId], references: [id])
+  storeId         Int?
+}
+
+model OrderOnProducts {
+  orderId   Int
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+  Order     Order   @relation(fields: [orderId], references: [id])
+
+  @@id([orderId, productId])
 }
