@@ -1,12 +1,14 @@
-import ProductData from "./ProductData";
+import OrderOnProductData from "./OrderOnProductData";
+import StoreData from "./StoreData";
 
 type OrderData = {
   id: number;
   date: Date;
   nameClient: string;
   total: number;
+  OrderOnProducts: OrderOnProductData[];
+  store: StoreData;
   storeId: number;
-  Products: ProductData[];
 };
 
 export default OrderData;

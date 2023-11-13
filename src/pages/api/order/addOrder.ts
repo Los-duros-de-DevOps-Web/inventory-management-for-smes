@@ -25,10 +25,13 @@ export default async function handler(
 
     const orderProducts = order.selectedProducts;
 
-    const orderProductsData = orderProducts.map((product: ProductData) => ({
-      orderId: orderAdd.id,
-      productId: product.id,
-    }));
+    const orderProductsData = orderProducts.map(
+      (product: ProductData, index: number) => ({
+        orderId: orderAdd.id,
+        productId: product.id,
+        amount: order.amountProductsAdded[index],
+      })
+    );
 
     const createdOrderProducts = await prisma.orderOnProducts.createMany({
       data: orderProductsData,

@@ -6,6 +6,7 @@ type OrderForm = {
   total: number;
   store: number;
   selectedProducts: ProductData[];
+  amountProductsAdded: number[];
 };
 
 export default OrderForm;

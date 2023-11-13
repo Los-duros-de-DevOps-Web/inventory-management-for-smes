@@ -66,6 +66,7 @@ model Order {
 model OrderOnProducts {
   orderId   Int
   productId Int
+  amount    Int
   Product   Product @relation(fields: [productId], references: [id])
   Order     Order   @relation(fields: [orderId], references: [id])
 

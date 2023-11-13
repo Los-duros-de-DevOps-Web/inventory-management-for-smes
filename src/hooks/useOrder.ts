@@ -10,8 +10,13 @@ const addOrder = (order: OrderForm) => {
   });
 };
 
+const getOrderByStore = (orderStore: number) => {
+  return axios.get(`api/order/${orderStore}`);
+};
+
 const useOrder = {
   addOrder,
+  getOrderByStore,
 };
 
 export default useOrder;

@@ -10,9 +10,16 @@ import OrderForm from "@/types/OrderForm";
 interface FormAddOrderProps {
   products: ProductData[];
   storeId: number;
+  setOpenModal: (openModal: boolean) => void;
+  updateProducts: () => void;
 }
 
-const FormAddOrder = ({ products, storeId }: FormAddOrderProps) => {
+const FormAddOrder = ({
+  products,
+  storeId,
+  setOpenModal,
+  updateProducts,
+}: FormAddOrderProps) => {
   const [nameClient, setNameClient] = useState<string>("");
   const [selectedProducts, setSelectedProducts] = useState<ProductData[]>([]);
   const [amountProductsAdded, setAmountProductsAdded] = useState<number[]>([]);
@@ -64,18 +71,20 @@ const FormAddOrder = ({ products, storeId }: FormAddOrderProps) => {
   };
 
   const onAddOrder = async () => {
-    //onMinusProductsInStock();
+    onMinusProductsInStock();
     const orderDataToAdd: OrderForm = {
       date: new Date(),
       nameClient,
       total: totalOrder,
       store: storeId,
       selectedProducts: selectedProducts,
+      amountProductsAdded: amountProductsAdded,
     };
-    console.log(orderDataToAdd);
     try {
       await useOrder.addOrder(orderDataToAdd);
       toast.success("Orden agregada correctamente");
+      setOpenModal(false);
+      updateProducts();
     } catch (error) {
       toast.error("Error al agregar la orden");
     }
