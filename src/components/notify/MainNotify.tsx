@@ -36,13 +36,23 @@ const MainNotify = () => {
     fetchNotify();
   };
 
+  const onDeletedAlarm = async (notify: NotifyData) => {
+    try {
+      await useNotify.deleteNotify(notify.id);
+      toast.success("Alarma eliminada");
+      updateAlarma();
+    } catch (error) {
+      toast.error("Error al eliminar la alarma");
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
     fetchNotify();
   }, []);
 
   return (
-    <div className="flex flex-row justify-center gap-5">
+    <div className="flex flex-row justify-between gap-5">
       <div className="w-[60%]">
         {products &&
           products.map((product: ProductData, index: number) => (
@@ -53,10 +63,14 @@ const MainNotify = () => {
             />
           ))}
       </div>
-      <div className="w-[40%]">
+      <div className="w-[40%] h-[600px] overflow-y-auto">
         {notify &&
           notify.map((notify: NotifyData, index: number) => (
-            <ActiveNotify key={index} notify={notify} />
+            <ActiveNotify
+              key={index}
+              notify={notify}
+              onDeletedAlarm={onDeletedAlarm}
+            />
           ))}
       </div>
     </div>

@@ -1,11 +1,13 @@
 import NotifyData from "@/types/NotifyData";
+import { Button } from "@mui/material";
 import React from "react";
 
 interface ActiveNotifyProps {
   notify: NotifyData;
+  onDeletedAlarm: (notify: NotifyData) => void;
 }
 
-const ActiveNotify = ({ notify }: ActiveNotifyProps) => {
+const ActiveNotify = ({ notify, onDeletedAlarm }: ActiveNotifyProps) => {
   return (
     <div className="flex flex-row justify-center">
       <div className="bg-white p-7 mt-4 w-[70%] shadow-lg">
@@ -28,6 +30,7 @@ const ActiveNotify = ({ notify }: ActiveNotifyProps) => {
             </div>
           </div>
         </div>
+        <Button onClick={() => onDeletedAlarm(notify)}>Eliminar Alarma</Button>
       </div>
     </div>
   );

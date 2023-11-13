@@ -12,9 +12,16 @@ const useGetNotify = () => {
   return axios.get("/api/notify/getNotify");
 };
 
+const deleteNotify = (notifyId: number) => {
+  console.log(notifyId);
+
+  return axios.delete(`/api/notify/del/${notifyId}`);
+};
+
 const useNotify = {
   useAddNotify,
   useGetNotify,
+  deleteNotify,
 };
 
 export default useNotify;
