@@ -10,46 +10,16 @@ import CardAalarm from "./CardAalarm";
 import ImgProfile from "../../../public/ImgProfile.png";
 import Graph from "./Graph";
 
-const MainDashboard = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [storeData, setStoreData] = useState<StoreData | null>(null);
+interface MainDashboardProps {
+  userData: UserData;
+  storeData: StoreData;
+}
 
-  const fetchUser = async () => {
-    try {
-      const response = await useCurrentUser();
-      const userData: UserData = response.data;
-      setUserData(userData);
-      fetchStoreData(userData.storeId);
-    } catch (error) {
-      toast.error("Error al cargar el usuario");
-    }
-  };
-
-  const fetchStoreData = async (id: number) => {
-    try {
-      const response = await useStore.useGetStore(id);
-      const storeData: StoreData = response.data;
-      setStoreData(storeData);
-    } catch (error) {
-      toast.error("Error al cargar la tienda");
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
+const MainDashboard = ({ userData, storeData }: MainDashboardProps) => {
   if (!userData) return <div>loading...</div>;
 
   return (
     <div>
-      {!storeData && (
-        <div className="flex flex-row justify-center mt-20 font-bold text-4xl">
-          No puedes ver el dashboard porque no perteneces a ninguna tienda, Si
-          eres Admin ve a la seccion de perfil y unete o crea una, si eres
-          empleado espera a que tu jefe te agregue a una tienda
-        </div>
-      )}
       {storeData && userData && (
         <div>
           <div>
