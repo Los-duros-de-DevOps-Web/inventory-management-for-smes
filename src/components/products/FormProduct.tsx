@@ -86,17 +86,6 @@ export const FormProduct = ({
               />
             </Grid>
             <Grid item xs={12}>
-              <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleFileSelected}
-              />
-              <Button fullWidth onClick={handleFileInputChange}>
-                Subir Imagen
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 value={product.lowStockRange}
                 onChange={handleInputChange}

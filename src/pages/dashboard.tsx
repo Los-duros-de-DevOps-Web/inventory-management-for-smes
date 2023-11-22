@@ -4,6 +4,7 @@ import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import MainDashboard from "@/components/dashbaord/MainDashboard";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <button onClick={logout}>Cerrar sesión</button>
+      <MainDashboard />
     </div>
   );
 };
