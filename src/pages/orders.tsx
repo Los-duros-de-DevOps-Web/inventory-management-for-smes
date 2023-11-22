@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import StoreData from "@/types/StoreData";
 import UserData from "@/types/UserData";
 import useStore from "@/hooks/useStore";
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from "@/hooks/useCurrentUserData";
 import { toast } from "react-hot-toast";
 
 import { Typography } from "@mui/material";

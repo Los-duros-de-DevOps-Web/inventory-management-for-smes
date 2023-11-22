@@ -1,5 +1,19 @@
 version: '3.9'
 services:
+
+  fronted:
+    image: 'gabrielsb19/frontendweb:latest'
+    container_name: frontendweb
+    ports:
+      - "9000:3000"
+    environment:
+      - POSTGRES_PRISMA_URL=postgresql://postgres:postgres@db:5432/imfs_db
+      - NEXTAUTH_JWT_SECRET="NEXT-JWT-SECRET"
+      - NEXTAUTH_SECRET="NEXT-SECRET"
+    depends_on:
+      - db
+
+
   db:
     image: 'postgres:latest'
     restart: always

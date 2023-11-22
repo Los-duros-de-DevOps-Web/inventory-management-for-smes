@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ImgProfile from "../../../public/ImgProfile.png";
+import ImgProfile from "../../assets/ImgProfile.png";
 import { Button } from "@mui/material";
 
 import ModalAddStore from "./ModalAddStore";

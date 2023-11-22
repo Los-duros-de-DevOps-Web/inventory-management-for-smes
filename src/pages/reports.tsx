@@ -1,5 +1,5 @@
 import React, { useState, useEffect, use } from "react";
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from "@/hooks/useCurrentUserData";
 import useStore from "@/hooks/useStore";
 import UserData from "@/types/UserData";
 import StoreData from "@/types/StoreData";

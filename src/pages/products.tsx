@@ -1,4 +1,4 @@
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from "@/hooks/useCurrentUserData";
 import { ClipLoader } from "react-spinners";
 import MainProducts from "@/components/products/MainProducts";
 import UserData from "@/types/UserData";

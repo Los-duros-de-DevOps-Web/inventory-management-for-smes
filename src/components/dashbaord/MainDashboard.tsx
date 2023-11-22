@@ -1,4 +1,3 @@
-import useCurrentUser from "@/hooks/useCurrentUser";
 import useStore from "@/hooks/useStore";
 import StoreData from "@/types/StoreData";
 import UserData from "@/types/UserData";
@@ -7,7 +6,7 @@ import { toast } from "react-hot-toast";
 import CardStock from "./CardStock";
 import CardOrder from "./CardOrder";
 import CardAalarm from "./CardAalarm";
-import ImgProfile from "../../../public/ImgProfile.png";
+import ImgProfile from "../../assets/ImgProfile.png";
 import Graph from "./Graph";
 
 interface MainDashboardProps {

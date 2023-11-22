@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useCurrentUser from "@/hooks/useCurrentUserData";
 import MainCardProfile from "@/components/profile/MainCardProfile";
 import StoreCardProfile from "@/components/profile/StoreCardProfile";
 import TableStores from "@/components/profile/TableStores";
@@ -15,7 +15,7 @@ const ProfilePage = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [storeData, setStoreData] = useState<StoreData[]>([]);
 
-  const fetchUserData = async () => {
+  const useFetchUserData = async () => {
     try {
       const response = await useCurrentUser();
       const userData: UserData = response.data;
@@ -35,13 +35,13 @@ const ProfilePage = () => {
     }
   };
 
-  const onUpdateProfile = () => {
-    fetchUserData();
+  const useUpdateProfile = () => {
+    useFetchUserData();
     fetchStoreData();
   };
 
   useEffect(() => {
-    onUpdateProfile();
+    useUpdateProfile();
   }, []);
 
   if (!userData) {
@@ -57,17 +57,17 @@ const ProfilePage = () => {
       {userData && (
         <MainCardProfile
           userData={userData}
-          onUpdateProfile={onUpdateProfile}
+          onUpdateProfile={useUpdateProfile}
         />
       )}
       {userData.storeId !== null && (
         <StoreCardProfile
           storeId={userData.storeId}
-          onUpdateProfile={onUpdateProfile}
+          onUpdateProfile={useUpdateProfile}
         />
       )}
       {userData.role === "Admin" && (
-        <TableStores stores={storeData} onUpdateProfile={onUpdateProfile} />
+        <TableStores stores={storeData} onUpdateProfile={useUpdateProfile} />
       )}
     </div>
   );

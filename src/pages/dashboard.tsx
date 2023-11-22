@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import MainDashboard from "@/components/dashbaord/MainDashboard";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import useStore from "@/hooks/useStore";
 import StoreData from "@/types/StoreData";
 import UserData from "@/types/UserData";
 import { toast } from "react-hot-toast";
+import useCurrentUserData from "@/hooks/useCurrentUserData";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await useCurrentUser();
+      const response = await useCurrentUserData();
       const userData: UserData = response.data;
       setUserData(userData);
       fetchStoreData(userData.storeId);
