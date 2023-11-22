@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "../../libs/prisma";
@@ -14,7 +13,7 @@ export default async function handler(
   try {
     const { username, name, gPassword } = req.body;
 
-    const password: string = await bcrypt.hash(gPassword, 12);
+    const password: string = await gPassword;
 
     const user = await prisma.employee.create({
       data: {
