@@ -43,6 +43,13 @@ const MainDashboard = () => {
 
   return (
     <div>
+      {!storeData && (
+        <div className="flex flex-row justify-center mt-20 font-bold text-4xl">
+          No puedes ver el dashboard porque no perteneces a ninguna tienda, Si
+          eres Admin ve a la seccion de perfil y unete o crea una, si eres
+          empleado espera a que tu jefe te agregue a una tienda
+        </div>
+      )}
       {storeData && userData && (
         <div>
           <div>
